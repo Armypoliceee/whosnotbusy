@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Who's Free? - BTS Game</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f7e9f0;
+      text-align: center;
+      padding: 40px;
+    }
+    h1 {
+      color: #A86BBF;
+    }
+    .members {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+    .member {
+      cursor: pointer;
+      border: 4px solid transparent;
+      border-radius: 20px;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .member:hover {
+      transform: scale(1.05);
+      border-color: #A86BBF;
+    }
+    .reply-box {
+      margin-top: 50px;
+      font-size: 20px;
+      padding: 20px;
+      border-radius: 12px;
+      background-color: #fff;
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+  .member {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 20px;
+    margin: 10px;
+    transition: transform 0.3s;
+    cursor: pointer;
+    border: 2px solid #d1c4e9;
+  }
+
+  </style>
+</head>
+<body>
+
+  <h1>Who's Free? — BTS Game 💜</h1>
+  <p>Click a member to ask if they’re free 👀</p>
+
+  <div class="members">
+    <img src="jin.jpeg" alt="Jin" class="member" onclick="showReply('jin')">
+    <img src="suga.jpeg" alt="Suga" class="member" onclick="showReply('suga')">
+    <img src="jhope.jpeg" alt="J-Hope" class="member" onclick="showReply('jhope')">
+    <img src="rm.jpeg" alt="RM" class="member" onclick="showReply('rm')">
+    <img src="jimin.jpeg" alt="Jimin" class="member" onclick="showReply('jimin')">
+    <img src="v.jpeg" alt="V" class="member" onclick="showReply('v')">
+    <img src="jk.jpeg" alt="Jungkook" class="member" onclick="showReply('jk')">
+  </div>
+
+  <div class="reply-box" id="replyBox">They’re thinking... 🤔</div>
+
+<script>
+  const replies = {
+    jin: [
+      "I'm eating! Go to Jimin 🍽️",
+      "Go bother Jungkook 😌",
+      "I’m filming Eat Jin, no time!",
+      "I'm busy with my worldwide handsome duties! 😎",
+      "Sorry, I'm making a new recipe. Try RM!",
+      "I'm doing aegyo. Try Suga!",
+      "Got a phone call from my mom, try V!",
+      "I'm on break, ask Jimin for now!",
+      "I'm busy being the oldest, go to J-Hope!",
+      "Eating again, go to JK!",
+      "I’m fixing my hair. Try J-Hope!",
+      "No time, I’m taking a nap. Ask V!",
+      "I’m busy being a big brother. Try Jimin!",
+      "I’m lost in my thoughts. Try RM.",
+      "I’m admiring myself in the mirror. Ask Suga!",
+      "I’m too handsome for this right now. Go to Tae!",
+      "I’m rehearsing for my solo album. Ask JK!",
+      "I’m busy with my worldwide handsome show. Ask Yoongi!",
+      "Trying out new recipes, sorry! Ask RM!",
+      "I’m fixing my outfits. Ask V!",
+      "I’m having a deep thought moment. Ask J-Hope!",
+      "I’m filming content for my YouTube channel. Go to Suga!",
+      "Too busy right now, try Jungkook!",
+      "I’m cooking for the members. Try V!",
+      "I’m watching anime, ask Jimin!",
+      "Sorry, I’m on my phone. Try RM!",
+      "Can’t talk, filming my reality show!",
+      "In the middle of a beauty routine. Ask Yoongi!",
+      "I’m in my comfy zone. Try Jungkook!",
+      "No time, go to Tae!",
+      "I’m eating again... Go to RM!",
+      "I’m cooking for the members. Try V!",
+      "I’m having a deep thought moment. Ask J-Hope!",
+      "Too busy right now, try Jungkook!",
+      "I’m filming my solo album. Ask Jimin!",
+      "I’m busy with my fanboys. Ask Jungkook!"
+    ],
+    suga: [
+      "I'm sleeping, ask Hoseok 😴",
+      "Go to RM, he's talking again 😒",
+      "Let me rest... try Jimin",
+      "I'm composing, no time for this!",
+      "I’m brainstorming lyrics, ask Jin!",
+      "Too busy writing music, go to JK!",
+      "I'm in my studio, try V!",
+      "Napping! Ask Jimin!",
+      "I’m making beats. Go to RM!",
+      "Don’t disturb me, I’m too focused. Ask JK!",
+      "I’m in a meeting, go bother Jin!",
+      "Taking a break from rapping, try J-Hope!",
+      "I’m writing a rap, ask Tae!",
+      "Busy being the quiet one. Go to Jimin!",
+      "I’m in my zone, try Jungkook!",
+      "I'm sleeping. Go to V!",
+      "I’m too chill for this, ask J-Hope!",
+      "Too busy recording. Try RM!",
+      "I’m having a 'me' moment. Go to Jimin!",
+      "I’m in my studio. Ask Jin!",
+      "Working on beats, go to Jungkook!",
+      "Sorry, I’m busy, ask V!",
+      "I'm reading, try J-Hope!",
+      "I’m doing a solo rap, go to Jimin!",
+      "I’m too chill for this. Ask RM!",
+      "I’m lost in my music. Ask Jimin!",
+      "I’m rapping, go to JK!",
+      "Don’t bother me, I’m recording. Ask V!",
+      "I’m writing lyrics, go to Jimin!",
+      "I’m busy working, try Jin!",
+      "I’m lost in my thoughts. Ask J-Hope!",
+      "I’m too tired for this. Ask V!",
+      "Working on a new beat. Ask RM!",
+      "Sorry, I’m busy right now. Go to Jin!"
+    ],
+    rm: [
+      "I'm lost in a museum again, go to Tae 🖼️",
+      "Not me, ask Hobi!",
+      "Go to Jin, he looks free",
+      "I’m too deep in thought, go bother Jungkook!",
+      "I’m preparing for my next lecture, ask Jimin!",
+      "Busy with world domination, try J-Hope!",
+      "I'm solving global problems, ask Jin!",
+      "I’m reading philosophy, go to V!",
+      "I’m rehearsing my speech, go to Suga!",
+      "I'm organizing my books. Ask Jimin!",
+      "I’m lost in my thoughts again, go to J-Hope!",
+      "I’m preparing for my next deep talk. Ask Jin!",
+      "I'm strategizing for the next BTS move. Go to V!",
+      "I’m busy with world peace plans. Ask Jungkook!",
+      "I'm preparing for a TED Talk, go to Suga!",
+      "Too busy discussing global issues. Ask V!",
+      "I’m making plans for the next album, go to Jimin!",
+      "I’m lost in the world of books. Ask Hobi!",
+      "I’m polishing my public speaking skills. Ask Jimin!",
+      "Too busy running the world, go to Jin!",
+      "I’m solving a mystery, try Jungkook!",
+      "I’m too deep in philosophy. Ask J-Hope!",
+      "Too busy being a genius, ask Jimin!",
+      "I’m trying to organize BTS’s next moves, ask Tae!",
+      "I’m busy preparing for the UN speech. Ask Jungkook!",
+      "I’m making a new speech for the UN, go to V!",
+      "I’m polishing my speech for the next world event. Go to Jin!",
+      "I’m lost in the sea of knowledge. Try J-Hope!",
+      "I’m brainstorming ideas, go to Suga!",
+      "I’m mapping out BTS’s future. Go to Jimin!",
+      "I’m thinking of new ways to conquer the world, ask Tae!",
+      "I’m studying human behavior. Ask Jungkook!",
+      "I’m focusing on my PhD. Go to Suga!",
+      "Too busy writing the future of BTS. Ask Jimin!"
+    ],
+    jimin: [
+      "Ahh~ I'm busy being cute, try Tae~ 💁‍♂️",
+      "Jungkook is free, I think 🐰",
+      "Not now! Ask hyung~",
+      "I’m busy being a mochi. Try V!",
+      "I’m rehearsing my next move. Ask Jin!",
+      "I'm playing with my dog, go to JK!",
+      "I’m trying new dance moves. Ask Tae!",
+      "Too busy being adorable, ask Suga!",
+      "I’m too cute for this, go to RM!",
+      "I’m filming content, go to J-Hope!",
+      "I’m too busy being cute, ask Jin!",
+      "I’m writing some new lyrics, go to JK!",
+      "I'm busy making hearts, go to Suga!",
+      "I’m doing my best choreography, try V!",
+      "Busy being Jimin, try Jungkook!",
+      "I’m lost in my cuteness. Go to RM!",
+      "I’m giving my best smile, go to tete!",
+      "I’m busy rehearsing. Go to Jungkook!",
+      "I'm busy making hearts, go to RM!",
+      "I’m practicing my aegyo. Ask Tae!",
+      "I’m busy being a precious mochi, ask Jin!",
+      "Too busy being Jimin, go to tete!",
+      "I’m perfecting my dance, go to Suga!",
+      "I’m doing aegyo, ask RM!",
+      "I’m busy taking care of my skin. Ask JK!",
+      "I’m focused on my dance. Go to tete!",
+      "I’m busy being cute again, go to RM!",
+      "I’m practicing my voice. Ask Jungkook!",
+      "I’m perfecting my charm, ask Suga!",
+      "I’m busy being charming. Go to Jin!",
+      "I’m too busy being cute, go to RM!",
+      "I’m rehearsing my part, go to Suga!",
+      "I’m making sure my hair is perfect, go to J-Hope!",
+      "I’m admiring myself in the mirror, go to Tete!"
+    ],
+    jhope: [
+      "Too much sunshine today! Try Yoongi ☀️",
+      "Not now, Namjoon has something to say!",
+      "Go to Jungkook, he’s doing nothing",
+      "I’m busy being the sunshine! Ask Jin!",
+      "I’m dancing right now, go to V!",
+      "Too busy being positive, ask Suga!",
+      "I’m too busy smiling! Try JK!",
+      "I’m on my way to save the world! Ask RM!",
+      "I’m busy with dance practice. Try Jimin!",
+      "I’m being too bright for this. Ask Tae!",
+      "I’m too energetic right now, go to Jin!",
+      "I’m spreading positivity. Go to V!",
+      "Busy creating sunshine, go to Jungkook!",
+      "I’m busy with dance moves. Ask RM!",
+      "I’m smiling so much, go to JK!",
+      "I’m busy being the light. Ask Jimin!",
+      "I’m spreading energy. Ask Jin!",
+      "I’m busy with rehearsals. Go to V!",
+      "I’m dancing and shining. Ask Suga!",
+      "I’m spreading joy, go to Jimin!",
+      "Busy being positive, ask V!",
+      "I’m busy brightening the world, go to Jin!",
+      "I’m full of sunshine today. Ask RM!",
+      "I’m busy spreading good vibes. Go to J-Hope!",
+      "I’m too busy dancing, go to JK!",
+      "I’m having too much fun today, go to V!",
+      "I’m busy making everything better, go to Suga!",
+      "I’m busy being the sunshine, ask Jungkook!",
+      "Too bright for this. Go to Jimin!",
+      "I’m busy being a ray of sunshine. Try Suga!"
+    ],
+    jungkook: [
+      "Try Jin-hyung, I’m gaming 🎮",
+      "Me? Free? Noooo. Go to Namjoon hyung",
+      "Hobi hyung might be free!",
+      "I’m busy training! Go to Jimin hyung!",
+      "Too busy, try namjoonie hyung !",
+      "I’m gaming. Go to V hyung !",
+      "Not now, I’m focused on my game!",
+      "I’m busy practicing. Ask Jin hyung !",
+      "I’m gaming, go to Taehyungie hyung !",
+      "Can’t talk, I’m playing a game!",
+      "I’m busy mastering my game. Try V hyung !",
+      "Too focused right now. Ask RM hyung!",
+      "I’m training, go to Suga hyung !",
+      "I’m focused on my music. Ask Jimin hyung !",
+      "I’m on a game break. Ask namjoon hyung!",
+      "I’m in my gaming zone, go to hobi hyung!",
+      "I’m busy with my training. Ask Suga hyung!",
+      "I’m in my gym, go to Jimin hyung!",
+      "I’m playing online, ask Vhyung!",
+      "I’m gaming, go to Jin hyung!",
+      "Busy training,to namjoon hyng" 
+    ],
+       v: [
+      "Go to Jungkook. He’s waiting 🐾",
+      "Painting rn~ Ask Jimin! 🎨",
+      "I’m watching anime, ask someone else",
+      "I’m in my art zone, go to namjoon hyung !",
+      "I’m busy being artistic. Ask Jin!",
+      "I’m in my studio, go to Jimin!",
+      "I'm busy making masterpieces, go to Jungkook!",
+      "I’m lost in a world of colors, go to Suga!",
+      "I’m in a painting mood, ask Jin!",
+      "I’m too busy with my art right now, ask J-Hope!",
+      "I’m painting, try RM!",
+      "I’m too busy being an artist, go to Jungkook!",
+      "I’m having an existential crisis. Ask Jimin!",
+      "I’m having a coffee break. Go to Suga!",
+      "Too busy being an artist. Ask J-Hope!",
+      "I’m on my way to being a fashion icon, go to Jimin!",
+      "I’m busy drawing. Ask RM!",
+      "I’m lost in my own thoughts. Go to J-Hope!",
+      "I’m practicing my photography, go to Jungkook!",
+      "I’m too busy with my photo shoot. Try Jin!",
+      "I’m watching my favorite anime, go to jiminie!",
+      "I’m creating the next big fashion trend. Ask Jiminie!",
+      "I’m lost in my world of colors. Try RM!",
+      "I’m too busy being cute, go to Jungkook!",
+      "I’m thinking about my next photoshoot. Ask Jin!",
+      "I’m drawing a masterpiece. Ask RM!",
+      "I’m too busy being perfect, go to Jimin!",
+      "I’m planning my next fashion show, go to J-Hope!",
+      "I’m listening to music, go to Jin!",
+      "I’m busy being fashionable. Ask Jungkook!",
+      "I’m working on my photography project. Try Jimin!",
+      "I’m too busy with my aesthetic. Ask Suga!",
+      "I’m having a moment with my camera, go to J-Hope!",
+      "I’m thinking of new concepts. Go to RM!",
+      "I’m too busy being a mood, go to Jungkook!",
+      "I’m working on my next visual art. Ask Jimin!",
+      "I’m painting a masterpiece, ask J-Hope!",
+      "I’m too busy with my fashion show. Go to Suga!",
+      "I’m busy with my next photo shoot. Ask Jungkook!",
+      "I’m drawing a new masterpiece, ask J-Hope!",
+    ]
+     };
+
+    function showReply(member) {
+      const memberReplies = replies[member];
+      const randomIndex = Math.floor(Math.random() * memberReplies.length);
+      const reply = memberReplies[randomIndex];
+      document.getElementById("replyBox").textContent = reply;
+    }
+  </script>
+
+</body>
+</html>
